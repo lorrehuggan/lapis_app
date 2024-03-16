@@ -1,6 +1,7 @@
 "use server";
 
 import { JSONContent } from "@tiptap/react";
+import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
@@ -68,6 +69,19 @@ export async function saveNote({
           zettels: JSON.stringify(zettelLinks),
         },
       });
+    return revalidatePath("/app/editor");
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function deleteNote({ id }: { id: string }) {
+  const schema = z.object({
+    id: z.string(),
+  });
+  const parsed = schema.parse({ id });
+  try {
+    await db.delete(noteTable).where(eq(noteTable.id, parsed.id));
     return revalidatePath("/app/editor");
   } catch (error) {
     console.log(error);

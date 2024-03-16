@@ -95,6 +95,14 @@
   outline: none;
 }
 
+.tiptap .is-empty::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #ced4da;
+  pointer-events: none;
+  height: 0;
+}
+
 .ProseMirror * {
   @apply my-0 leading-none
 }

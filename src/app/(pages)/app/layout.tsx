@@ -13,7 +13,7 @@ export default function Layout({
   children: React.ReactNode;
 }>) {
   return (
-    <main className="grid grid-cols-9 h-dvh overflow-hidden">
+    <main className="grid grid-cols-12 h-dvh overflow-hidden">
       <Menu />
       {children}
       <Options />

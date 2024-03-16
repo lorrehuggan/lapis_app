@@ -49,7 +49,9 @@ export default function Trash({ notes }: Props) {
                   );
                 })
               ) : (
-                <li>No trashed notes</li>
+                <li className="text-muted-foreground text-xs">
+                  No trashed notes
+                </li>
               )}
             </ul>
           </CollapsibleContent>

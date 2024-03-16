@@ -76,6 +76,21 @@
   }
 }
 
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+
 .tiptap:focus-visible {
   outline: none;
 }
@@ -85,5 +100,42 @@
 }
 
 .ProseMirror h1 {
-  @apply tracking-tighter leading-tight
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror h2 {
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror h3 {
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror h4 {
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror h5 {
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror h6 {
+  @apply tracking-tighter leading-tight mb-2
+}
+
+.ProseMirror p {
+  @apply mb-2 leading-tight text-foreground/80
+}
+
+.ProseMirror ul {
+  @apply my-4 ml-4
+}
+
+.ProseMirror li {
+  @apply font-medium text-sm text-muted-foreground
+}
+
+
+a[data-type="zettel"] {
+  @apply tracking-widest text-red-400 no-underline cursor-pointer
 }

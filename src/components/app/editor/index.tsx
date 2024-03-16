@@ -11,7 +11,6 @@ import Typography from "@tiptap/extension-typography";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { FileSymlink, Save } from "lucide-react";
-import { useState } from "react";
 
 type Props = {
   note?: JSONContent;
@@ -23,7 +22,6 @@ const CustomDocument = Document.extend({
 });
 
 export default function TextEditor({ note, id }: Props) {
-  const [update, setUpdate] = useState(false);
   const editor = useEditor({
     content: note || "<h1>Hello World! 🌍</h1>",
     extensions: [
@@ -50,11 +48,9 @@ export default function TextEditor({ note, id }: Props) {
     },
     onDestroy: () => {
       console.log("editor destroyed");
-      setUpdate(false);
     },
     onUpdate: () => {
       console.log("editor updated");
-      setUpdate(true);
     },
   });
 

@@ -3,6 +3,7 @@
 import { JSONContent } from "@tiptap/react";
 import { eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { db } from "../db";
@@ -20,6 +21,7 @@ export async function saveNote({
   folder: string | null;
   id?: string | null;
 }) {
+  "use server";
   // clean up and add try catch etc
   console.log("saveNote");
 
@@ -76,14 +78,32 @@ export async function saveNote({
 }
 
 export async function deleteNote({ id }: { id: string }) {
+  "use server";
   const schema = z.object({
     id: z.string(),
   });
   const parsed = schema.parse({ id });
   try {
     await db.delete(noteTable).where(eq(noteTable.id, parsed.id));
-    return revalidatePath("/app/editor");
   } catch (error) {
     console.log(error);
   }
+  return redirect("/app/editor");
+}
+
+export async function trashNote({ id }: { id: string }) {
+  "use server";
+  const schema = z.object({
+    id: z.string(),
+  });
+  const parsed = schema.parse({ id });
+  try {
+    await db
+      .update(noteTable)
+      .set({ trashed: true })
+      .where(eq(noteTable.id, parsed.id));
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app/editor");
 }

@@ -5,57 +5,18 @@ import { saveNote } from "@/lib/actions/editor";
 import { toggleZettel } from "@/lib/editor/commands";
 import ZettelExtension from "@/lib/editor/extensions/zettle/mark";
 import { getZettelLinks } from "@/lib/editor/helpers";
-import Document from "@tiptap/extension-document";
-import Placeholder from "@tiptap/extension-placeholder";
-import Typography from "@tiptap/extension-typography";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { FileSymlink, Save } from "lucide-react";
-import { useState } from "react";
 
 type Props = {
   note?: JSONContent;
   id?: string;
 };
 
-const CustomDocument = Document.extend({
-  content: "heading block*",
-});
-
 export default function TextEditor({ note, id }: Props) {
-  const [update, setUpdate] = useState(false);
   const editor = useEditor({
     content: note || "<h1>Hello World! 🌍</h1>",
-    extensions: [
-      StarterKit.configure({
-        document: false,
-        heading: {
-          levels: [1, 2, 3, 4, 5, 6],
-        },
-      }),
-      Placeholder.configure({
-        placeholder: ({ node }) => {
-          if (node.type.name === "heading") {
-            return "Title";
-          }
-          return "Start writing...";
-        },
-      }),
-      Typography,
-      ZettelExtension,
-      CustomDocument,
-    ],
-    onCreate: () => {
-      console.log("editor created");
-    },
-    onDestroy: () => {
-      console.log("editor destroyed");
-      setUpdate(false);
-    },
-    onUpdate: () => {
-      console.log("editor updated");
-      setUpdate(true);
-    },
+    extensions: [StarterKit, ZettelExtension],
   });
 
   if (!editor) return null;
@@ -72,19 +33,12 @@ export default function TextEditor({ note, id }: Props) {
   const zettels = getZettelLinks(doc.content);
 
   return (
-    <div className="h-full">
-      <div className="h-8 flex items-center gap-2"></div>
-      <div className="max-w-[640px] mb-2 w-11/12 flex items-center gap-1 mx-auto">
-        <>
-          <Button onClick={() => toggleZettel(editor)} size="icon">
-            <FileSymlink size={16} />
-          </Button>
-          <form action={sn}>
-            <Button type="submit" size="icon">
-              <Save size={16} />
-            </Button>
-          </form>
-        </>
+    <div className="px-4 h-full">
+      <div className="h-8 flex items-center gap-2">
+        <Button onClick={() => toggleZettel(editor)}>Zettel</Button>
+        <form action={sn}>
+          <Button type="submit">Save to Database</Button>
+        </form>
       </div>
       <div className="max-w-[640px] w-11/12 flex items-center gap-1 mx-auto">
         {zettels.map((zettel) => {

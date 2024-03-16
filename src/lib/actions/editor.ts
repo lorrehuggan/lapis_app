@@ -2,7 +2,6 @@
 
 import { JSONContent } from "@tiptap/react";
 import { eq } from "drizzle-orm";
-import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
@@ -47,6 +46,7 @@ export async function saveNote({
   });
 
   const zettelLinks = getZettelLinks(doc.content);
+  let noteId = "";
   try {
     const note = await db
       .insert(noteTable)
@@ -70,11 +70,15 @@ export async function saveNote({
           folder,
           zettels: JSON.stringify(zettelLinks),
         },
+      })
+      .returning({
+        id: noteTable.id,
       });
-    return revalidatePath("/app/editor");
+    noteId = note[0].id;
   } catch (error) {
     console.log(error);
   }
+  return redirect(`/app/editor/${noteId}`);
 }
 
 export async function deleteNote({ id }: { id: string }) {

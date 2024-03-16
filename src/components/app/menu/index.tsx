@@ -2,6 +2,7 @@ import Folder from "@/components/app/menu/files/folder";
 import Note from "@/components/app/menu/files/note";
 import { db } from "@/lib/db";
 import { folderTable, noteTable } from "@/lib/db/schema/note";
+import Nav from "./nav";
 
 export default async function Menu() {
   const notes = await db.select().from(noteTable);
@@ -9,9 +10,11 @@ export default async function Menu() {
 
   return (
     <section className="col-span-2 grid grid-cols-4 border-r-[1px] border-muted-foreground/20">
-      <div className="border-r-[1px] border-muted-foreground/20 px-4">Menu</div>
+      <div className="border-r-[1px] pt-4 border-muted-foreground/20 px-4 flex flex-col items-center">
+        <Nav />
+      </div>
       <div className="col-span-3 px-4 text-sm pt-4">
-        <ul className="space-y-1">
+        <ul className="flex flex-col gap-1">
           <li>
             <a href="/app/editor">Go To Editor</a>
           </li>

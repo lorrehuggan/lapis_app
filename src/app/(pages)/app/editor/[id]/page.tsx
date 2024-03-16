@@ -5,6 +5,7 @@ import { JSONContent } from "@tiptap/react";
 import { eq } from "drizzle-orm";
 
 export default async function Page({ params }: { params: { id: string } }) {
+  if (!params.id) return null;
   const note = await db
     .select({
       content: noteTable.content,

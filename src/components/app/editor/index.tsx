@@ -1,5 +1,12 @@
 "use client";
 import { Badge } from "@/components/ui/badge";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb";
 import { Button } from "@/components/ui/button";
 import { saveNote } from "@/lib/actions/editor";
 import { toggleZettel } from "@/lib/editor/commands";
@@ -10,7 +17,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { FileSymlink, Save } from "lucide-react";
+import { ChevronRight, FileSymlink, Save } from "lucide-react";
 
 type Props = {
   note?: JSONContent;
@@ -67,16 +74,51 @@ export default function TextEditor({ note, id }: Props) {
 
   const zettels = getZettelLinks(doc.content);
 
+  function slug() {
+    return (
+      note?.content?.[0]?.content?.[0]?.text
+        ?.split(" ")
+        .join("-")
+        .toLowerCase() ?? "Untitled"
+    );
+  }
+
   return (
     <div className="h-full">
-      <div className="h-8 flex items-center gap-2"></div>
+      <div className="h-8 flex items-center gap-2 px-8">
+        <Breadcrumb className="font-mono text-xs tracking-tighter">
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/app">app</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator>
+              <ChevronRight size={16} />
+            </BreadcrumbSeparator>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/app/editor">editor</BreadcrumbLink>
+            </BreadcrumbItem>
+            {id && note?.content && (
+              <>
+                <BreadcrumbSeparator>
+                  <ChevronRight size={16} />
+                </BreadcrumbSeparator>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href={`/app/editor/${id}`}>
+                    {slug()}
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              </>
+            )}
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
       <div className="max-w-[640px] mb-2 w-11/12 flex items-center gap-1 mx-auto">
         <>
-          <Button onClick={() => toggleZettel(editor)} size="icon">
+          <Button onClick={() => toggleZettel(editor)} size="sm">
             <FileSymlink size={16} />
           </Button>
           <form action={sn}>
-            <Button type="submit" size="icon">
+            <Button type="submit" size="sm">
               <Save size={16} />
             </Button>
           </form>

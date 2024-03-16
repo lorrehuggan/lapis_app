@@ -1,4 +1,4 @@
-import { sqliteTable, text } from "drizzle-orm/sqlite-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { createInsertSchema, createSelectSchema } from "drizzle-zod";
 import { z } from "zod";
 import { userTable } from "./user";
@@ -15,6 +15,9 @@ export const noteTable = sqliteTable("note", {
   }),
   folder: text("folder_id").references(() => folderTable.id),
   zettels: text("zettels").default("[]"),
+  trashed: integer("trashed", {
+    mode: "boolean",
+  }).default(false),
   createdAt: text("created_at").notNull().default(new Date().toISOString()),
   updateAt: text("updated_at").notNull().default(new Date().toISOString()),
 });

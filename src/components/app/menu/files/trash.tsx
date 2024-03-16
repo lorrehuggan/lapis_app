@@ -12,38 +12,44 @@ import {
   ContextMenuShortcut,
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
-import type { Folder, Note as NoteType } from "@/lib/db/schema/note";
-import { FolderIcon, FolderOpenIcon, Trash } from "lucide-react";
+import type { Note as NoteType } from "@/lib/db/schema/note";
+import { Trash2, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import Note from "./note";
 
 type Props = {
-  folder: Folder;
   notes: NoteType[];
 };
 
-export default function Folder({ folder, notes }: Props) {
+export default function Trash({ notes }: Props) {
   const [open, setOpen] = useState(false);
-  const folderNotes = notes.filter(
-    (note) => note.folder === folder.id && !note.trashed,
-  );
-
+  const trashedNotes = notes.filter((note) => note.trashed);
   return (
     <ContextMenu>
       <ContextMenuTrigger>
-        <Collapsible open={open} onOpenChange={setOpen} key={folder.id}>
+        <Collapsible open={open} onOpenChange={setOpen}>
           <CollapsibleTrigger asChild>
             <div className="w-full cursor-pointer flex items-center gap-1">
-              {open ? <FolderOpenIcon size={16} /> : <FolderIcon size={16} />}
-              <span className="line-clamp-1">{folder.name}</span>
+              {trashedNotes.length > 0 ? (
+                <Trash2 size={16} />
+              ) : (
+                <TrashIcon size={16} />
+              )}
+              <span className="line-clamp-1">Trash</span>
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent asChild>
             <ul className="pl-5">
-              {folderNotes.length > 0 ? (
-                folderNotes.map((note) => <Note key={note.id} note={note} />)
+              {trashedNotes.length > 0 ? (
+                trashedNotes.map((note) => {
+                  return (
+                    <li key={note.id}>
+                      <Note note={note} />
+                    </li>
+                  );
+                })
               ) : (
-                <li className="text-muted-foreground text-xs">Empty folder</li>
+                <li>No trashed notes</li>
               )}
             </ul>
           </CollapsibleContent>
@@ -53,13 +59,13 @@ export default function Folder({ folder, notes }: Props) {
         <ContextMenuItem>
           Delete
           <ContextMenuShortcut>
-            <Trash size={16} />
+            <TrashIcon size={16} />
           </ContextMenuShortcut>
         </ContextMenuItem>
         <ContextMenuItem>
           Rename
           <ContextMenuShortcut>
-            <Trash size={16} />
+            <TrashIcon size={16} />
           </ContextMenuShortcut>
         </ContextMenuItem>
       </ContextMenuContent>

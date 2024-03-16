@@ -23,6 +23,15 @@ dependencies:
   '@t3-oss/env-nextjs':
     specifier: ^0.9.2
     version: 0.9.2(typescript@5.4.2)(zod@3.22.4)
+  '@tiptap/extension-document':
+    specifier: ^2.2.4
+    version: 2.2.4(@tiptap/core@2.2.4)
+  '@tiptap/extension-placeholder':
+    specifier: ^2.2.4
+    version: 2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4)
+  '@tiptap/extension-typography':
+    specifier: ^2.2.4
+    version: 2.2.4(@tiptap/core@2.2.4)
   '@tiptap/html':
     specifier: ^2.2.4
     version: 2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4)
@@ -1638,6 +1647,16 @@ packages:
       '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
     dev: false
 
+  /@tiptap/extension-placeholder@2.2.4(@tiptap/core@2.2.4)(@tiptap/pm@2.2.4):
+    resolution: {integrity: sha512-UL4Fn9T33SoS7vdI3NnSxBJVeGUIgCIutgXZZ5J8CkcRoDIeS78z492z+6J+qGctHwTd0xUL5NzNJI82HfiTdg==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+      '@tiptap/pm': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
+      '@tiptap/pm': 2.2.4
+    dev: false
+
   /@tiptap/extension-strike@2.2.4(@tiptap/core@2.2.4):
     resolution: {integrity: sha512-/a2EwQgA+PpG17V2tVRspcrIY0SN3blwcgM7lxdW4aucGkqSKnf7+91dkhQEwCZ//o8kv9mBCyRoCUcGy6S5Xg==}
     peerDependencies:
@@ -1648,6 +1667,14 @@ packages:
 
   /@tiptap/extension-text@2.2.4(@tiptap/core@2.2.4):
     resolution: {integrity: sha512-NlKHMPnRJXB+0AGtDlU0P2Pg+SdesA2lMMd7JzDUgJgL7pX2jOb8eUqSeOjFKuSzFSqYfH6C3o6mQiNhuQMv+g==}
+    peerDependencies:
+      '@tiptap/core': ^2.0.0
+    dependencies:
+      '@tiptap/core': 2.2.4(@tiptap/pm@2.2.4)
+    dev: false
+
+  /@tiptap/extension-typography@2.2.4(@tiptap/core@2.2.4):
+    resolution: {integrity: sha512-1gmvr74uk44Wzxd6QI+dKz/M//xaD15yYwUtcRc9+ohbfvCqtRl3XDVoxl3MQmDMljcui5kMMaRcFNvW1Kujvg==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
     dependencies:

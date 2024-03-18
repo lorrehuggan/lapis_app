@@ -1,8 +1,6 @@
-import Folder from "@/components/app/menu/files/folder";
-import Note from "@/components/app/menu/files/note";
 import { db } from "@/lib/db";
 import { folderTable, noteTable } from "@/lib/db/schema/note";
-import Trash from "./files/trash";
+import Files from "../menu/files";
 import Nav from "./nav";
 
 export default async function Menu() {
@@ -15,28 +13,7 @@ export default async function Menu() {
         <Nav />
       </div>
       <div className="col-span-3 px-4 text-sm pt-4">
-        <ul className="flex flex-col gap-1">
-          <li>
-            <Trash notes={notes} />
-          </li>
-          {folders.map((folder) => {
-            return (
-              <li key={folder.id}>
-                <Folder key={folder.id} folder={folder} notes={notes} />
-              </li>
-            );
-          })}
-          {notes.map((note) => {
-            if (note.folder || note.trashed) {
-              return null;
-            }
-            return (
-              <li key={note.id}>
-                <Note key={note.id} note={note} />
-              </li>
-            );
-          })}
-        </ul>
+        <Files notes={notes} folders={folders} />
       </div>
     </section>
   );

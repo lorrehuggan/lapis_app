@@ -111,3 +111,44 @@ export async function trashNote({ id }: { id: string }) {
   }
   return redirect("/app/editor");
 }
+
+export async function restoreNote({ id }: { id: string }) {
+  "use server";
+  const schema = z.object({
+    id: z.string(),
+  });
+  const parsed = schema.parse({ id });
+  try {
+    await db
+      .update(noteTable)
+      .set({ trashed: false })
+      .where(eq(noteTable.id, parsed.id));
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app/editor");
+}
+
+export async function updateNoteFolder({
+  noteId,
+  folderId,
+}: {
+  noteId: string;
+  folderId: string | null;
+}) {
+  "use server";
+  const schema = z.object({
+    noteId: z.string(),
+    folderId: z.string().nullable(),
+  });
+  const parsed = schema.parse({ noteId, folderId });
+  try {
+    await db
+      .update(noteTable)
+      .set({ folder: parsed.folderId })
+      .where(eq(noteTable.id, parsed.noteId));
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app/editor");
+}

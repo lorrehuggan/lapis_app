@@ -13,6 +13,7 @@ import {
   ContextMenuTrigger,
 } from "@/components/ui/context-menu";
 import type { Note as NoteType } from "@/lib/db/schema/note";
+import { Draggable } from "@hello-pangea/dnd";
 import { Trash2, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import Note from "./note";
@@ -41,11 +42,23 @@ export default function Trash({ notes }: Props) {
           <CollapsibleContent asChild>
             <ul className="pl-5">
               {trashedNotes.length > 0 ? (
-                trashedNotes.map((note) => {
+                trashedNotes.map((note, i) => {
                   return (
-                    <li key={note.id}>
-                      <Note note={note} />
-                    </li>
+                    <Draggable
+                      key={note.id}
+                      draggableId={`trash*${note.id}`}
+                      index={i}
+                    >
+                      {(provided) => (
+                        <li
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          ref={provided.innerRef}
+                        >
+                          <Note key={note.id} note={note} />
+                        </li>
+                      )}
+                    </Draggable>
                   );
                 })
               ) : (

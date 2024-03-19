@@ -74,6 +74,9 @@ dependencies:
   react-dom:
     specifier: ^18
     version: 18.2.0(react@18.2.0)
+  tailwind-extended-shadows:
+    specifier: ^0.4.0
+    version: 0.4.0(tailwindcss@3.4.1)
   tailwind-merge:
     specifier: ^2.2.1
     version: 2.2.1
@@ -5011,6 +5014,14 @@ packages:
   /supports-preserve-symlinks-flag@1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /tailwind-extended-shadows@0.4.0(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-v8YSvNLVMVHRTCoq9SgE4bNWedBcrsxKy7z8DEj2Z+HoFkjMX2POBLuND6JS3pnJoWcRhvxYVGa9C/3tOfa8EQ==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0'
+    dependencies:
+      tailwindcss: 3.4.1
+    dev: false
 
   /tailwind-merge@2.2.1:
     resolution: {integrity: sha512-o+2GTLkthfa5YUt4JxPfzMIpQzZ3adD1vLVkvKE1Twl9UAhGsEbIZhHHZVRttyW177S8PDJI3bTQNaebyofK3Q==}

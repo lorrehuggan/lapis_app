@@ -33,9 +33,9 @@ export default function Folder({ folder, notes }: Props) {
       <ContextMenuTrigger>
         <Collapsible open={open} onOpenChange={setOpen} key={folder.id}>
           <CollapsibleTrigger asChild>
-            <div className="w-full cursor-pointer flex items-center gap-1">
+            <div className="w-full cursor-pointer flex items-center gap-1 p-[2px] rounded">
               {open ? <FolderOpenIcon size={16} /> : <FolderIcon size={16} />}
-              <span className="line-clamp-1">{folder.name}</span>
+              <span className="line-clamp-1 font-bold">{folder.name}</span>
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent asChild>

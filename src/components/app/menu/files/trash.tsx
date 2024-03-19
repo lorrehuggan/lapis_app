@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/context-menu";
 import type { Note as NoteType } from "@/lib/db/schema/note";
 import { Draggable } from "@hello-pangea/dnd";
+import clsx from "clsx";
 import { Trash2, TrashIcon } from "lucide-react";
 import { useState } from "react";
 import Note from "./note";
@@ -32,11 +33,20 @@ export default function Trash({ notes }: Props) {
           <CollapsibleTrigger asChild>
             <div className="w-full cursor-pointer flex items-center gap-1">
               {trashedNotes.length > 0 ? (
-                <Trash2 size={16} />
+                <Trash2 size={16} className="text-destructive" />
               ) : (
                 <TrashIcon size={16} />
               )}
-              <span className="line-clamp-1">Trash</span>
+              <span
+                className={clsx(
+                  "line-clamp-1 font-bold transition-colors ease-out",
+                  {
+                    "text-destructive": trashedNotes.length > 0,
+                  },
+                )}
+              >
+                Trash
+              </span>
             </div>
           </CollapsibleTrigger>
           <CollapsibleContent asChild>
@@ -55,7 +65,7 @@ export default function Trash({ notes }: Props) {
                           {...provided.dragHandleProps}
                           ref={provided.innerRef}
                         >
-                          <Note key={note.id} note={note} />
+                          <Note key={note.id} note={note} trash={true} />
                         </li>
                       )}
                     </Draggable>

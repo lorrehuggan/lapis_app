@@ -92,7 +92,7 @@ export async function deleteNote({ id }: { id: string }) {
   } catch (error) {
     console.log(error);
   }
-  return redirect("/app/editor");
+  return redirect("/app");
 }
 
 export async function trashNote({ id }: { id: string }) {
@@ -109,7 +109,7 @@ export async function trashNote({ id }: { id: string }) {
   } catch (error) {
     console.log(error);
   }
-  return redirect("/app/editor");
+  return redirect("/app");
 }
 
 export async function restoreNote({ id }: { id: string }) {
@@ -126,7 +126,7 @@ export async function restoreNote({ id }: { id: string }) {
   } catch (error) {
     console.log(error);
   }
-  return redirect("/app/editor");
+  return redirect("/app");
 }
 
 export async function updateNoteFolder({
@@ -150,5 +150,5 @@ export async function updateNoteFolder({
   } catch (error) {
     console.log(error);
   }
-  return redirect("/app/editor");
+  return redirect("/app");
 }

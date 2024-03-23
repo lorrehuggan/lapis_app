@@ -20,7 +20,7 @@ export default function Note({ note, dragging, trash }: Props) {
       className={clsx(
         "flex p-[2px] rounded group items-center gap-1 text-muted-foreground w-full hover:text-foreground",
         {
-          "bg-gray-200": dragging === note.id,
+          "bg-muted shadow": dragging === note.id,
         },
       )}
     >

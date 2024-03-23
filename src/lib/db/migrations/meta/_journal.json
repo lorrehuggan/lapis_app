@@ -5,22 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1710547728620,
-      "tag": "0000_special_marvel_apes",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1710616352644,
-      "tag": "0001_slow_shooting_star",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1710616369132,
-      "tag": "0002_regular_iron_lad",
+      "when": 1710894445577,
+      "tag": "0000_aberrant_tomorrow_man",
       "breakpoints": true
     }
   ]

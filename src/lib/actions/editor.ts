@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { db } from "../db";
-import { noteTable } from "../db/schema/note";
+import { folderTable, noteTable } from "../db/schema/note";
 import { getTitle, getZettelLinks } from "../editor/helpers";
 
 export async function saveNote({
@@ -147,6 +147,61 @@ export async function updateNoteFolder({
       .update(noteTable)
       .set({ folder: parsed.folderId })
       .where(eq(noteTable.id, parsed.noteId));
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app");
+}
+
+export async function createFolder() {
+  "use server";
+  try {
+    await db.insert(folderTable).values({
+      name: "New Folder",
+      id: uuidv4(),
+      user: "12345",
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app");
+}
+
+export async function deleteFolder({ id }: { id: string }) {
+  "use server";
+  const schema = z.object({
+    id: z.string(),
+  });
+  const parsed = schema.parse({ id });
+  try {
+    await db.delete(folderTable).where(eq(folderTable.id, parsed.id));
+  } catch (error) {
+    console.log(error);
+  }
+  return redirect("/app");
+}
+
+export async function updateFolderName(
+  formData: FormData,
+  {
+    id,
+    name,
+  }: {
+    id: string;
+    name: string;
+  },
+) {
+  "use server";
+  const schema = z.object({
+    id: z.string(),
+    name: z.string(),
+  });
+  const parsed = schema.parse({ id, name });
+  try {
+    await db
+      .update(folderTable)
+      .set({ name: parsed.name })
+      .where(eq(folderTable.id, parsed.id));
   } catch (error) {
     console.log(error);
   }

@@ -17,7 +17,7 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { ChevronRight, FileSymlink, Save } from "lucide-react";
+import { ChevronRight, FileSymlink, Folders, Save } from "lucide-react";
 
 type Props = {
   note?: JSONContent;
@@ -89,13 +89,15 @@ export default function TextEditor({ note, id }: Props) {
         <Breadcrumb className="font-mono text-xs tracking-tighter">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/app">app</BreadcrumbLink>
+              <BreadcrumbLink href="/app">home</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronRight size={16} />
             </BreadcrumbSeparator>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/app/editor">editor</BreadcrumbLink>
+              <BreadcrumbLink href="/app/editor">
+                <Folders size={16} />
+              </BreadcrumbLink>
             </BreadcrumbItem>
             {id && note?.content && (
               <>
@@ -103,7 +105,7 @@ export default function TextEditor({ note, id }: Props) {
                   <ChevronRight size={16} />
                 </BreadcrumbSeparator>
                 <BreadcrumbItem>
-                  <BreadcrumbLink href={`/app/editor/${id}`}>
+                  <BreadcrumbLink className="pointer-events-none">
                     {slug()}
                   </BreadcrumbLink>
                 </BreadcrumbItem>

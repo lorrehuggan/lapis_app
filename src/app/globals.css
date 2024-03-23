@@ -143,7 +143,6 @@
   @apply font-medium text-sm text-muted-foreground
 }
 
-
 a[data-type="zettel"] {
-  @apply tracking-widest text-red-400 no-underline cursor-pointer
+  @apply text-lime-500 font-bold no-underline cursor-pointer
 }

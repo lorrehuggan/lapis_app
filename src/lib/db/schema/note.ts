@@ -16,7 +16,6 @@ export const noteTable = sqliteTable(
       mode: "text",
     }),
     folder: text("folder_id").references(() => folderTable.id),
-    zettels: text("zettels").default("[]"),
     trashed: integer("trashed", {
       mode: "boolean",
     }).default(false),
@@ -58,3 +57,24 @@ export const folderTable = sqliteTable(
 export const insertFolderSchema = createInsertSchema(folderTable);
 export const selectFolderSchema = createSelectSchema(folderTable);
 export type Folder = z.infer<typeof selectFolderSchema>;
+
+export const zettelTable = sqliteTable(
+  "zettel",
+  {
+    id: text("id").notNull().primaryKey().unique(),
+    key: text("key").notNull(),
+    note: text("note_id")
+      .notNull()
+      .references(() => noteTable.id),
+    user: text("user_id")
+      .notNull()
+      .references(() => userTable.id),
+    createdAt: text("created_at").notNull().default(new Date().toISOString()),
+  },
+  (table) => {
+    return {
+      noteIdx: index("zettel_note_idx").on(table.note),
+      userIdx: index("zettel_user_idx").on(table.user),
+    };
+  },
+);

@@ -17,18 +17,19 @@ import Placeholder from "@tiptap/extension-placeholder";
 import Typography from "@tiptap/extension-typography";
 import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import { ChevronRight, FileSymlink, Folders, Save } from "lucide-react";
+import { ChevronRight, FileSymlink, Folders, Home, Save } from "lucide-react";
 
 type Props = {
   note?: JSONContent;
   id?: string;
+  user: string;
 };
 
 const CustomDocument = Document.extend({
   content: "heading block*",
 });
 
-export default function TextEditor({ note, id }: Props) {
+export default function TextEditor({ note, id, user }: Props) {
   const editor = useEditor({
     content: note || "<h1>Hello World! 🌍</h1>",
     extensions: [
@@ -68,6 +69,7 @@ export default function TextEditor({ note, id }: Props) {
     description: "",
     folder: null,
     id: id ? id : null,
+    user,
   });
 
   const doc = editor.getJSON();
@@ -89,7 +91,9 @@ export default function TextEditor({ note, id }: Props) {
         <Breadcrumb className="font-mono text-xs tracking-tighter">
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href="/app">home</BreadcrumbLink>
+              <BreadcrumbLink href="/app">
+                <Home size={16} />
+              </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator>
               <ChevronRight size={16} />

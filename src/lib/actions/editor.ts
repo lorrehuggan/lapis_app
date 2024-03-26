@@ -6,7 +6,7 @@ import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { z } from "zod";
 import { db } from "../db";
-import { folderTable, noteTable } from "../db/schema/note";
+import { folderTable, noteTable, zettelTable } from "../db/schema/note";
 import { getTitle, getZettelLinks } from "../editor/helpers";
 
 export async function saveNote({
@@ -14,11 +14,13 @@ export async function saveNote({
   description,
   folder,
   id,
+  user,
 }: {
   content?: string;
   description: "No description" | string;
   folder: string | null;
   id?: string | null;
+  user: string;
 }) {
   "use server";
   // clean up and add try catch etc
@@ -36,6 +38,7 @@ export async function saveNote({
     folder: z.string().nullable(),
     title: z.string(),
     id: z.string().nullable(),
+    user: z.string(),
   });
   const parsed = schema.parse({
     content,
@@ -43,10 +46,13 @@ export async function saveNote({
     description,
     folder,
     id,
+    user,
   });
 
   const zettelLinks = getZettelLinks(doc.content);
+
   let noteId = "";
+
   try {
     const note = await db
       .insert(noteTable)
@@ -56,8 +62,7 @@ export async function saveNote({
         description,
         folder,
         id: id ? id : uuidv4(),
-        user: "12345",
-        zettels: JSON.stringify(zettelLinks),
+        user,
         updateAt: new Date().toISOString(),
       })
       .onConflictDoUpdate({
@@ -68,13 +73,26 @@ export async function saveNote({
           title: parsed.title,
           description,
           folder,
-          zettels: JSON.stringify(zettelLinks),
         },
       })
       .returning({
         id: noteTable.id,
       });
     noteId = note[0].id;
+    if (zettelLinks.length > 0) {
+      for (const link of zettelLinks) {
+        await db
+          .insert(zettelTable)
+          .values({
+            id: uuidv4(),
+            note: noteId,
+            key: link,
+            user: parsed.user,
+            createdAt: new Date().toISOString(),
+          })
+          .onConflictDoNothing();
+      }
+    }
   } catch (error) {
     console.log(error);
   }

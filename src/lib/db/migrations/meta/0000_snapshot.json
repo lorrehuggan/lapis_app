@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "243031ed-ebd3-4831-877c-b4d4e99ab69e",
+  "id": "d150be29-8c13-40bb-bbcf-fd9cc364f99d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "folder": {
@@ -41,7 +41,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.571Z'"
+          "default": "'2024-03-25T01:31:48.721Z'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -49,7 +49,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.571Z'"
+          "default": "'2024-03-25T01:31:48.721Z'"
         }
       },
       "indexes": {
@@ -138,14 +138,6 @@
           "notNull": false,
           "autoincrement": false
         },
-        "zettels": {
-          "name": "zettels",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "autoincrement": false,
-          "default": "'[]'"
-        },
         "trashed": {
           "name": "trashed",
           "type": "integer",
@@ -160,7 +152,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.570Z'"
+          "default": "'2024-03-25T01:31:48.720Z'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -168,7 +160,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.570Z'"
+          "default": "'2024-03-25T01:31:48.720Z'"
         }
       },
       "indexes": {
@@ -225,6 +217,188 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "zettel": {
+      "name": "zettel",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "note_id": {
+          "name": "note_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": "'2024-03-25T01:31:48.721Z'"
+        }
+      },
+      "indexes": {
+        "zettel_id_unique": {
+          "name": "zettel_id_unique",
+          "columns": [
+            "id"
+          ],
+          "isUnique": true
+        },
+        "zettel_key_idx": {
+          "name": "zettel_key_idx",
+          "columns": [
+            "key"
+          ],
+          "isUnique": false
+        },
+        "zettel_note_idx": {
+          "name": "zettel_note_idx",
+          "columns": [
+            "note_id"
+          ],
+          "isUnique": false
+        },
+        "zettel_user_idx": {
+          "name": "zettel_user_idx",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "zettel_note_id_note_id_fk": {
+          "name": "zettel_note_id_note_id_fk",
+          "tableFrom": "zettel",
+          "tableTo": "note",
+          "columnsFrom": [
+            "note_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "zettel_user_id_user_id_fk": {
+          "name": "zettel_user_id_user_id_fk",
+          "tableFrom": "zettel",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "session": {
+      "name": "session",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "text",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_id": {
+          "name": "user_id",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "user_email": {
+          "name": "user_email",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "fresh": {
+          "name": "fresh",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false,
+          "default": true
+        },
+        "expires_at": {
+          "name": "expires_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "refresh_token": {
+          "name": "refresh_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "access_token": {
+          "name": "access_token",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "user_index": {
+          "name": "user_index",
+          "columns": [
+            "user_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "session_user_id_user_id_fk": {
+          "name": "session_user_id_user_id_fk",
+          "tableFrom": "session",
+          "tableTo": "user",
+          "columnsFrom": [
+            "user_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "user": {
       "name": "user",
       "columns": {
@@ -255,7 +429,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.569Z'"
+          "default": "'2024-03-25T01:31:48.718Z'"
         },
         "updated_at": {
           "name": "updated_at",
@@ -263,7 +437,7 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false,
-          "default": "'2024-03-20T00:27:25.569Z'"
+          "default": "'2024-03-25T01:31:48.718Z'"
         }
       },
       "indexes": {
@@ -274,8 +448,8 @@
           ],
           "isUnique": true
         },
-        "user_id_idx": {
-          "name": "user_id_idx",
+        "id_index": {
+          "name": "id_index",
           "columns": [
             "id"
           ],

@@ -81,9 +81,17 @@ export default function Files({ notes, folders }: Props) {
             <Droppable droppableId="trash">
               {(provided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef}>
-                  <li>
-                    <Trash notes={notes} active={isHoveringTrash} />
-                  </li>
+                  {isHoveringTrash ? (
+                    <div className="w-full h-10 rounded p-2 bg-red-50 border-[1px] border-red-300">
+                      <span className="text-red-300 text-xs font-bold">
+                        Trash
+                      </span>
+                    </div>
+                  ) : (
+                    <li>
+                      <Trash notes={notes} active={isHoveringTrash} />
+                    </li>
+                  )}
                   {provided.placeholder}
                 </div>
               )}
@@ -100,6 +108,7 @@ export default function Files({ notes, folders }: Props) {
                   if (note.folder || note.trashed) {
                     return null;
                   }
+                  if (isHoveringTrash && dragging !== note.id) return null;
                   return (
                     <Draggable key={note.id} draggableId={note.id} index={i}>
                       {(provided) => (

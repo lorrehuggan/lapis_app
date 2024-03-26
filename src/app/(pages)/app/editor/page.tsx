@@ -1,9 +1,13 @@
+import { validateRequest } from "@/lib/authentication";
 import { db } from "@/lib/db";
 import { noteTable } from "@/lib/db/schema/note";
 import { redirect } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 
 export default async function App() {
+  const { session } = await validateRequest();
+  if (!session) redirect("/login");
+
   const note = await db
     .insert(noteTable)
     .values({
@@ -25,7 +29,7 @@ export default async function App() {
           },
         ],
       }),
-      user: "12345",
+      user: session.userId,
       id: uuidv4(),
     })
     .returning({

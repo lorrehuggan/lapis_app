@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   description: "Note-taking for the modern age",
 };
 
-export default function Layout({
+export default async function Layout({
   children,
 }: Readonly<{
   children: React.ReactNode;
